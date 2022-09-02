@@ -7,7 +7,7 @@
 	background-color: #24252A;
 }
 
-li, a, button, .heading {
+li, a, button, .logo {
 	font-family: "Montserrat", sans-serif;
 	font-weight: 500;
 	font-size: 16px;
@@ -41,7 +41,7 @@ header {
 	transition: all 0.3s ease 0s;
 }
 
-.nav_links li a:hover {
+.nav_links li a:hover, .active {
 	color: #0088A9;
 }
 
@@ -59,4 +59,9 @@ button {
 
 button:hover {
 	background-color: rgba(0, 136, 169, 0.8);
+}
+
+.logo {
+	font-size: 18px;
+	font-weight: 600;
 }
