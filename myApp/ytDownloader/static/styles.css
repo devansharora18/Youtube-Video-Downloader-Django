@@ -25,11 +25,11 @@ header {
 	padding-right: 10%;
 }
 
-.nav_links {
+.nav__links {
 	list-style: none;
 }
 
-.nav_links li {
+.nav__links li {
 	display: inline-block;
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -37,11 +37,11 @@ header {
 	padding-right: 20px;
 }
 
-.nav_links li a {
+.nav__links li a {
 	transition: all 0.3s ease 0s;
 }
 
-.nav_links li a:hover, .active {
+.nav__links li a:hover, .active {
 	color: #0088A9;
 }
 
@@ -64,4 +64,34 @@ button:hover {
 .logo {
 	font-size: 18px;
 	font-weight: 600;
+}
+
+.menu-btn i {
+	color: white;
+	display: none;
+	cursor: pointer;
+	padding-left: 10px;
+}
+
+@media (max-width: 1250px) {
+	.nav__links {
+		position: fixed;
+		top: 80px;
+		left: 0;
+		background-color: #24252A;
+		height: 100vht;
+		width: 100%;
+		display: block;
+		text-align: center;
+	}
+
+	
+	.nav__links li {
+		display: block;
+		margin-top: 40px;
+	}
+
+	.menu-btn i {
+		display: inline-block;
+	}
 }
