@@ -77,14 +77,17 @@ button:hover {
 	.nav__links {
 		position: fixed;
 		top: 80px;
-		left: 0;
+		left: -100%;
 		background-color: #24252A;
-		height: 100vht;
+		height: 100vh;
 		width: 100%;
-		display: block;
+		display: none;
 		text-align: center;
 	}
 
+	#click:checked ~ .nav__links {
+		display: block;
+	}
 	
 	.nav__links li {
 		display: block;
