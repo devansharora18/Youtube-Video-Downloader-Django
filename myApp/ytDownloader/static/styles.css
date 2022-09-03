@@ -83,14 +83,14 @@ button:hover {
 		width: 100%;
 		display: block;
 		text-align: center;
-		/*visibility: hidden;*/
+		visibility: hidden;
 	}
 
-	header > #click:not(:checked) ~ .nav__links {
+	.logo > #click:not(:checked) ~ nav > .nav__links {
 		visibility: hidden;
 	}
 	
-	header > #click:checked ~ .nav__links {
+	.logo > #click:checked ~ nav > .nav__links {
 		visibility: visible;
 	}
 
