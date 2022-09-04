@@ -130,3 +130,41 @@ button:hover {
 		display: inline-block;
 	}
 }
+
+.heading {
+	margin-top: 20px;
+	display: flex;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 600;
+	font-size: 26px;
+	color: whitesmoke;
+	text-decoration: none;
+	justify-content: center;
+}
+
+#link {
+	display: block;
+	width: 70%;
+	margin-top: 30px;
+	padding:15px;
+	appearance: none;
+	background: none;
+	outline: none;
+	border: none;
+	
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 17px 17px;
+
+	transition: 0.4s ease;
+
+	margin-left: auto;
+	margin-right: auto;
+
+	margin-bottom: 20px;
+}
+
+form button {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
