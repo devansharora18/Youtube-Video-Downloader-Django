@@ -81,37 +81,44 @@ button:hover {
 	.nav__links {
 		position: fixed;
 		top: 80px;
-		left: 0;
+		left: -100%;
 		background-color: #24252A;
 		height: 100vh;
 		width: 100%;
 		display: block;
 		text-align: center;
-		visibility: hidden;
+		transition: all 0.3s ease;
 	}
 
 	.cta {
-		display: block;
+		display: inline-flex;
 		position: fixed;
 		bottom: 80px;
-		align-items: center;
-		visibility: hidden;
+		width: 100vw;
+		left: -100;
+		justify-content: center;
+		transition: all 0.3s ease;
 	}
 
+
 	#click:not(:checked) ~ .nav__links{
-		visibility: hidden;
+		left: -100%;
 	}
 	
 	#click:not(:checked) ~ .cta{
-		visibility: hidden;
+		left: -100%;
 	}
 
 	#click:checked ~ .nav__links {
-		visibility: visible;
+		left: 0%;
 	}
 
 	#click:checked ~ .cta{
-		visibility: visible;
+		left: 0%;
+	}
+
+	#click:checked ~ .menu-btn i:before {
+		content: "\f00d";
 	}
 
 	.nav__links li {
