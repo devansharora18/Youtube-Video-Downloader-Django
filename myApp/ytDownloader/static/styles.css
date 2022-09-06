@@ -20,6 +20,7 @@ li, a, button, .logo {
 }
 
 header {
+	top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -27,6 +28,8 @@ header {
 	padding-bottom: 30px;
 	padding-left: 10%;
 	padding-right: 10%;
+	position: fixed;
+	width: 100vw;
 }
 
 .nav__links {
@@ -132,7 +135,7 @@ button:hover {
 }
 
 .heading {
-	margin-top: 20px;
+	margin-top: 120px;
 	display: flex;
 	font-family: "Montserrat", sans-serif;
 	font-weight: 600;
