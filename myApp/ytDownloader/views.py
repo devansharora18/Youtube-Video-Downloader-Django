@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def ytd(request):
 	return render(request, 'ytd.html')
+
+def download_page(request):
+	return render(request, 'download.html')
