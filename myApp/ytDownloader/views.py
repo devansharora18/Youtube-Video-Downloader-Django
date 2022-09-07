@@ -15,7 +15,13 @@ def download_page(request):
 
 	res = []
 	for i in streams:
-		res.append(i.resolution)
+		if i.includes_audio_track == True:
+			string = f'{i.resolution} audio only'
+		else:
+			string = f'{i.resolution} video'
+		res.append(string)
+
+	res = list(dict.fromkeys(res))
 
 	return render(request, 'download.html', {
 		'res': res

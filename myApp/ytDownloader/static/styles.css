@@ -171,3 +171,11 @@ form button {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.ct {
+	display: flex;
+	margin-top: 60px;
+	color: whitesmoke;
+	font-size: 20px;
+	justify-content: center;
+}
