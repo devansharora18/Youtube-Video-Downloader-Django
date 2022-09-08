@@ -21,8 +21,17 @@ def download_page(request):
 			string = f'{i.resolution} video'
 		res.append(string)
 
+	title = yt.title
+	author = yt.author
+	length = str(yt.length//60) + ' minutes'
+	if length == 0:
+		length = str(yt.length) + ' seconds'
+
 	res = list(dict.fromkeys(res))
 
 	return render(request, 'download.html', {
-		'res': res
+		'res': res,
+		'title': title,
+		'author': author,
+		'length': length,
 	})

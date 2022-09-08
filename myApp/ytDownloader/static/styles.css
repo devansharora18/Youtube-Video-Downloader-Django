@@ -166,7 +166,7 @@ button:hover {
 	margin-bottom: 20px;
 }
 
-form button {
+.search-form button {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -184,6 +184,7 @@ table {
 	border: 1px solid #ccc;
 	border-collapse: collapse;
 	margin: 0;
+	margin-top: 50px;
 	padding: 0;
 	width: 100%;
 	table-layout: fixed;
@@ -207,6 +208,10 @@ table {
 	font-size: .85em;
 	letter-spacing: .1em;
 	text-transform: uppercase;
+      }
+
+      .table-heading {
+	color: #0088A9;
       }
       
       @media screen and (max-width: 600px) {
@@ -256,4 +261,12 @@ table {
 	table td:last-child {
 	  border-bottom: 0;
 	}
+
+	.download-btn {
+		font-size: 10px;
+		
+	}
+
       }
+
+      
