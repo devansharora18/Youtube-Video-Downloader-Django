@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Download</title>
+		<title>YT Video Download</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{% static 'styles.css' %}?{% now "U" %}">
@@ -25,53 +25,10 @@
 		
 			<a class="cta" href="#"><button>Contact</button></a>
 		</header>
+
 		<div class="heading">
-			Download Page
+			Download successful	
 		</div>
-
-		<div class="thumbnail">
-			<img class="thumbnail-image" src="{{thumbnail}}" alt="Error loading thumnnail">
-		</div>
-
-		<div class="ct">
-			Title: {{title}}
-			<br>
-			<br>
-			By: {{author}}
-			<br>
-			<br>
-			Length: {{length}}
-		</div>
-
-		<div class="ct">
-			Choose your prefered attributes from below
-		</div>
-		
-		<table>
-			<thead>
-				<tr class="table-heading">
-					<th scope="col">Attributes</th>
-					<th scope="col">Download</th>
-				</tr>
-			</thead>
-
-			{% for i in res %}
-
-			<tbody>
-				<tr>
-					<td data-label="Attributes">{{i}}</td>
-					<td data-label="Download">
-						<form action="{% url 'YT-downloader:success' i.onlyres %}" method="post">
-							{% csrf_token %}
-							<button type="submit" value="Download" class="download-btn">Download</button>
-						</form>
-					</td>
-				</tr>
-
-				{% endfor %}
-
-			</tbody>
-		</table>
 
 	</body>
 </html>

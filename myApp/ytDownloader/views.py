@@ -16,12 +16,16 @@ def download_page(request):
 	streams = yt.streams.all()
 
 	res = []
+	ores = []
 	for i in streams:
+		onlyres = i.resolution
+
 		if i.includes_audio_track == True:
 			string = str(i.resolution) + ' audio only ' + str(i.filesize_approx // 1048576) + 'mb'
 		else:
 			string = str(i.resolution) + ' video ' + str(i.filesize_approx // 1048576) + 'mb'
 		res.append(string)
+		ores.append(onlyres)
 	
 	try:
 		for j in range(len(res)):
@@ -40,9 +44,11 @@ def download_page(request):
 	thumbnail = yt.thumbnail_url
 	print(thumbnail)
 
+
 	res = list(dict.fromkeys(res))
 
 	return render(request, 'download.html', {
+		'onlyres': ores,
 		'res': res,
 		'title': title,
 		'author': author,
@@ -50,9 +56,18 @@ def download_page(request):
 		'thumbnail': thumbnail,
 	})
 
-def download(request, res):
+def success(request, res):
 	global url
 
 	homedir = os.path.expanduser("~")
 
-	disr = homedir + '/Downloads'
+	dirs = homedir + '/Downloads'
+
+	yt = YouTube(url)
+
+	if request.method == 'POST':
+		yt.streams.get_by_resolution(res).download(dirs)
+		return render(request, 'success.html')
+
+	else:
+		return render(request, 'error.html')
