@@ -269,4 +269,15 @@ table {
 
       }
 
-      
+.thumbnail {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;	
+}
+
+@media (max-width: 700px) {
+	.thumbnail-image {
+		height: 70%;
+		width: 70%;
+	}
+}
