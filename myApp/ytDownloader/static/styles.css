@@ -80,6 +80,12 @@ button:hover {
 	padding-left: 10px;
 }
 
+.cta {
+	display: flex;
+	width: 247px;
+	justify-content: end;
+}
+
 @media (max-width: 900px) {
 	.nav__links {
 		position: fixed;
