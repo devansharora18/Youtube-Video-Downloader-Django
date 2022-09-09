@@ -55,13 +55,13 @@
 				</tr>
 			</thead>
 
-			{% for i in res %}
+			{% for i in onlyres %}
 
 			<tbody>
 				<tr>
 					<td data-label="Attributes">{{i}}</td>
 					<td data-label="Download">
-						<form action="{% url 'YT-downloader:success' i.onlyres %}" method="post">
+						<form action="{% url 'YT-downloader:success' i %}" method="post">
 							{% csrf_token %}
 							<button type="submit" value="Download" class="download-btn">Download</button>
 						</form>

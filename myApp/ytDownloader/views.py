@@ -12,25 +12,25 @@ def download_page(request):
 	url = request.GET.get('url')
 
 	yt = YouTube(url)
-
-	streams = yt.streams.all()
+	global streams
+	streams = yt.streams
 
 	res = []
 	ores = []
 	for i in streams:
 		onlyres = i.resolution
 
-		if i.includes_audio_track == True:
-			string = str(i.resolution) + ' audio only ' + str(i.filesize_approx // 1048576) + 'mb'
-		else:
-			string = str(i.resolution) + ' video ' + str(i.filesize_approx // 1048576) + 'mb'
+		string = str(i.resolution) + ' ' + str(i.filesize_approx // 1048576) + 'mb'
+
 		res.append(string)
 		ores.append(onlyres)
 	
+	ores = list(dict.fromkeys(ores))
+
 	try:
-		for j in range(len(res)):
-			if 'None' in res[j]:
-				res.pop(j)
+		for j in range(len(ores)):
+			if ores[j] == None:
+				ores.pop(j)
 
 	except:
 		pass
@@ -63,10 +63,12 @@ def success(request, res):
 
 	dirs = homedir + '/Downloads'
 
-	yt = YouTube(url)
+	#yt = YouTube(url)
+	#yt = yt.streams.filter(file_extension='mp4')
 
 	if request.method == 'POST':
-		yt.streams.get_by_resolution(res).download(dirs)
+		#a,b = res.split()
+		streams.filter(res=res).first().download(dirs)
 		return render(request, 'success.html')
 
 	else:
