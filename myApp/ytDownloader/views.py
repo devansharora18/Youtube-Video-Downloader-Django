@@ -1,3 +1,4 @@
+from turtle import title
 from django.shortcuts import render
 from django.http import HttpResponse
 from pytube import YouTube
@@ -93,3 +94,34 @@ def success(request, res):
 
 def about(request):
 	return render(request, 'about.html')
+
+def music(request):
+	return render(request, 'music.html')
+
+def download_music(request):
+	url = request.GET.get('url')
+	yt = YouTube(url)
+	title = yt.title
+
+	stream = yt.streams.filter(only_audio=True).first()
+	#size = stream.filesize
+
+	homedir = os.path.expanduser("~")
+
+	dirs = homedir + '/Downloads/'
+
+	if request.method == 'POST':
+		
+		
+		stream.download(output_path = dirs, filename = "video.mp4")
+		file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
+		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+		# o = dirs + title + '.mp4'
+		response = HttpResponse(file, content_type = 'audio.mp3')
+		response['Content-Disposition'] = f'attachment; filename = "{title}.mp4"'
+		os.remove(f'{dirs}/{title}.mp4')
+		return response
+		# return render(request, 'success.html')
+
+	else:
+		return render(request, 'error.html')
