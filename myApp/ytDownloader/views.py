@@ -78,13 +78,13 @@ def success(request, res):
 	if request.method == 'POST' and size < 900:
 		
 		
-		streams.filter(res=res).first().download(output_path = '/home/runner/youtube-video-downloader/downloads', filename = "video.mp4")
-		file = FileWrapper(open('/home/runner/youtube-video-downloader/downloads/video.mp4', 'rb'))
+		streams.filter(res=res).first().download(output_path = dirs, filename = "video.mp4")
+		file = FileWrapper(open(f'{dirs}/video.mp4', 'rb'))
 		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
 		# o = dirs + title + '.mp4'
 		response = HttpResponse(file, content_type = 'application/vnd.mp4')
 		response['Content-Disposition'] = 'attachment; filename = "video.mp4"'
-		os.remove('/home/runner/youtube-video-downloader/downloads/video.mp4')
+		os.remove(f'{dirs}/video.mp4')
 		return response
 		# return render(request, 'success.html')
 
