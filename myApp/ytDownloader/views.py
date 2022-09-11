@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from pytube import YouTube
 import os
+from wsgiref.util import FileWrapper
+
 
 # Create your views here.
 
@@ -35,6 +38,9 @@ def download_page(request):
 	except:
 		pass
 
+	for k in range(len(ores)):
+		ores[k] = ores[k] + ' ' + str(streams.filter(res=ores[k]).first().filesize // 1048576) + 'mb'
+	
 	title = yt.title
 	author = yt.author
 	length = str(yt.length//60) + ' minutes'
@@ -61,15 +67,26 @@ def success(request, res):
 
 	homedir = os.path.expanduser("~")
 
-	dirs = homedir + '/Downloads'
-
-	#yt = YouTube(url)
-	#yt = yt.streams.filter(file_extension='mp4')
-
-	if request.method == 'POST':
-		#a,b = res.split()
-		streams.filter(res=res).first().download(dirs)
-		return render(request, 'success.html')
+	dirs = homedir + '/Downloads/'
+  
+	yt = YouTube(url)
+	title = yt.title
+	print(title)
+	res,b = res.split()
+	size = streams.filter(res=res).first().filesize // 1048576
+	print(size)
+	if request.method == 'POST' and size < 900:
+		
+		
+		streams.filter(res=res).first().download(output_path = '/home/runner/youtube-video-downloader/downloads', filename = "video.mp4")
+		file = FileWrapper(open('/home/runner/youtube-video-downloader/downloads/video.mp4', 'rb'))
+		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+		# o = dirs + title + '.mp4'
+		response = HttpResponse(file, content_type = 'application/vnd.mp4')
+		response['Content-Disposition'] = 'attachment; filename = "video.mp4"'
+		os.remove('/home/runner/youtube-video-downloader/downloads/video.mp4')
+		return response
+		# return render(request, 'success.html')
 
 	else:
 		return render(request, 'error.html')
