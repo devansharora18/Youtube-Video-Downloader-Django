@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from pytube import YouTube
+from pytube import YouTube, Playlist
 import os
 from wsgiref.util import FileWrapper
+import shutil
+from django.contrib import messages
 
 
 # Create your views here.
@@ -108,7 +110,8 @@ def download_music(request):
 	homedir = os.path.expanduser("~")
 
 	dirs = homedir + '/Downloads/'
-		
+	
+	messages.success(request, 'The download has been started, do not close this page')
 		
 	stream.download(output_path = dirs, filename = f"{title}.mp3")
 	file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
@@ -119,3 +122,23 @@ def download_music(request):
 	os.remove(f'{dirs}/{title}.mp3')
 	return response
 	# return render(request, 'success.html')
+
+def playlist(request):
+	url = request.GET.get('url')
+
+	playlist = Playlist(url)
+	title = playlist.title
+	videos = playlist.videos
+
+	homedir = os.path.expanduser("~")
+
+	dirs = homedir + f'/Downloads/{title}'
+
+	messages.success(request, 'The download has been started, do not close this page')
+
+	for i in videos:
+		name = i.title
+		stream = i.streams.filter(only_audio=True).first()
+		stream.download(output_path = dirs, filename = f"{name}.mp3")
+
+	shutil.make_archive(dirs, 'zip', dirs)
