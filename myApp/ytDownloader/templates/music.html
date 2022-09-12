@@ -19,8 +19,8 @@
 			</label>
 		
 			<ul class="nav__links">
-				<li><a class="active" href="/">Youtube</a></li>
-				<li><a href="music/">Music</a></li>
+				<li><a href="/">Youtube</a></li>
+				<li><a class="active" href="/">Music</a></li>
 				<li><a href="about/">About</a></li>
 			</ul>
 		
@@ -28,7 +28,19 @@
 		</header>
 
 		<div class="heading">
-			Enter Yt Video link here	
+			Single Music
+		</div>
+		
+		<form action="/download-music/" class="search-form" method="get">
+			<div class="form">
+				<!--<label for="link">Enter Link</label>-->
+				<input type="text" id="link" name="url" placeholder="Enter link here">
+			</div>
+			<button type="submit">Enter</button>
+		</form>
+
+		<div class="heading">
+			Playlist
 		</div>
 		
 		<form action="download/" class="search-form" method="get">

@@ -9,4 +9,6 @@ urlpatterns = [
 	path('download/', views.download_page, name="download"),
 	path('download/<res>/', views.success, name="success"),
 	path('about/', views.about, name="about"),
+	path('music/', views.music, name="music"),
+	path('download-music/', views.download_music, name="download-music"),
 ]

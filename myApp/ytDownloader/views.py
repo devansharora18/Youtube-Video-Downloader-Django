@@ -1,6 +1,10 @@
+from turtle import title
 from django.shortcuts import render
+from django.http import HttpResponse
 from pytube import YouTube
 import os
+from wsgiref.util import FileWrapper
+
 
 # Create your views here.
 
@@ -35,6 +39,9 @@ def download_page(request):
 	except:
 		pass
 
+	for k in range(len(ores)):
+		ores[k] = ores[k] + ' ' + str(streams.filter(res=ores[k]).first().filesize // 1048576) + 'mb'
+	
 	title = yt.title
 	author = yt.author
 	length = str(yt.length//60) + ' minutes'
@@ -61,18 +68,55 @@ def success(request, res):
 
 	homedir = os.path.expanduser("~")
 
-	dirs = homedir + '/Downloads'
-
-	#yt = YouTube(url)
-	#yt = yt.streams.filter(file_extension='mp4')
-
-	if request.method == 'POST':
-		#a,b = res.split()
-		streams.filter(res=res).first().download(dirs)
-		return render(request, 'success.html')
+	dirs = homedir + '/Downloads/'
+  
+	yt = YouTube(url)
+	title = yt.title
+	print(title)
+	res,b = res.split()
+	size = streams.filter(res=res).first().filesize // 1048576
+	print(size)
+	if request.method == 'POST' and size < 900:
+		
+		
+		streams.filter(res=res).first().download(output_path = dirs, filename = "video.mp4")
+		file = FileWrapper(open(f'{dirs}/video.mp4', 'rb'))
+		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+		# o = dirs + title + '.mp4'
+		response = HttpResponse(file, content_type = 'application/vnd.mp4')
+		response['Content-Disposition'] = 'attachment; filename = "video.mp4"'
+		os.remove(f'{dirs}/video.mp4')
+		return response
+		# return render(request, 'success.html')
 
 	else:
 		return render(request, 'error.html')
 
 def about(request):
 	return render(request, 'about.html')
+
+def music(request):
+	return render(request, 'music.html')
+
+def download_music(request):
+	url = request.GET.get('url')
+	yt = YouTube(url)
+	title = yt.title
+
+	stream = yt.streams.filter(only_audio=True).first()
+	#size = stream.filesize
+
+	homedir = os.path.expanduser("~")
+
+	dirs = homedir + '/Downloads/'
+		
+		
+	stream.download(output_path = dirs, filename = f"{title}.mp3")
+	file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
+	# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+	# o = dirs + title + '.mp4'
+	response = HttpResponse(file, content_type = 'audio.mp3')
+	response['Content-Disposition'] = f'attachment; filename = "{title}.mp3"'
+	os.remove(f'{dirs}/{title}.mp3')
+	return response
+	# return render(request, 'success.html')
