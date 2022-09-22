@@ -111,7 +111,7 @@ def download_music(request):
 
 	dirs = homedir + '/Downloads/'
 	
-	messages.success(request, 'The download has been started, do not close this page')
+	#messages.success(request, 'The download has been started, do not close this page')
 		
 	stream.download(output_path = dirs, filename = f"{title}.mp3")
 	file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
@@ -124,17 +124,18 @@ def download_music(request):
 	# return render(request, 'success.html')
 
 def playlist(request):
+
 	url = request.GET.get('url')
 
 	playlist = Playlist(url)
 	title = playlist.title
 	videos = playlist.videos
-
+	return render(request, 'playlist.html')
 	homedir = os.path.expanduser("~")
 
 	dirs = homedir + f'/Downloads/{title}'
 
-	messages.success(request, 'The download has been started, do not close this page')
+	#messages.success(request, 'The download has been started, do not close this page')
 
 	for i in videos:
 		name = i.title
