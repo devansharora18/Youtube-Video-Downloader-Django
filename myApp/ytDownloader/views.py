@@ -110,6 +110,7 @@ def download_music(request):
 	homedir = os.path.expanduser("~")
 
 	dirs = homedir + '/Downloads/'
+	size = stream.filesize // 1048576
 	
 	#messages.success(request, 'The download has been started, do not close this page')
 	if request.method == 'POST' and size < 900:	
