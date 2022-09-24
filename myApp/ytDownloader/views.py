@@ -142,12 +142,12 @@ def playlist(request):
 		stream = i.streams.filter(only_audio=True).first()
 		stream.download(output_path = f'{dirs}/{title}', filename = f"{name}.mp3")
 
-	shutil.make_archive(f'{dirs}/{title}',zip, f'{dirs}/{title}')
+	path = shutil.make_archive(title,'zip', f'{dirs}/{title}')
 	
-	file = FileWrapper(open(f'{dirs}/{title}.zip', 'rb'))
+	file = FileWrapper(open(path, 'rb'))
 
 	response = HttpResponse(file, content_type='application/force-download')
 	response['Content-Disposition'] = f'attachment; filename = "{title}.zip"'
-	os.remove(f'{dirs}/{title}.zip')
+	os.remove(path)
 	os.remove(f'{dirs}/{title}')
 	return response
