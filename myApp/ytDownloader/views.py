@@ -138,19 +138,28 @@ def playlist(request):
 
 	dirs = homedir + f'/Downloads'
 
-	#messages.success(request, 'The download has been started, do not close this page')
+	size = 0
 
 	for i in videos:
-		name = i.title
 		stream = i.streams.filter(only_audio=True).first()
-		stream.download(output_path = f'{dirs}/{title}', filename = f"{name}.mp3")
+		size += stream.filesize // 1048576
 
-	path = shutil.make_archive(title,'zip', f'{dirs}/{title}')
-	
-	file = FileWrapper(open(path, 'rb'))
+	#messages.success(request, 'The download has been started, do not close this page')
+	if size < 900:
+		for i in videos:
+			name = i.title
+			stream = i.streams.filter(only_audio=True).first()
+			stream.download(output_path = f'{dirs}/{title}', filename = f"{name}.mp3")
 
-	response = HttpResponse(file, content_type='application/force-download')
-	response['Content-Disposition'] = f'attachment; filename = "{title}.zip"'
-	os.remove(path)
-	os.remove(f'{dirs}/{title}')
-	return response
+		path = shutil.make_archive(title,'zip', f'{dirs}/{title}')
+
+		file = FileWrapper(open(path, 'rb'))
+
+		response = HttpResponse(file, content_type='application/force-download')
+		response['Content-Disposition'] = f'attachment; filename = "{title}.zip"'
+		os.remove(path)
+		os.remove(f'{dirs}/{title}')
+		return response
+
+	else:
+		return render(request, 'error.html')
