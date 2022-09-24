@@ -110,20 +110,24 @@ def download_music(request):
 	homedir = os.path.expanduser("~")
 
 	dirs = homedir + '/Downloads/'
+	size = stream.filesize // 1048576
 	
-	messages.success(request, 'The download has been started, do not close this page')
-		
-	stream.download(output_path = dirs, filename = f"{title}.mp3")
-	file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
-	# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
-	# o = dirs + title + '.mp4'
-	response = HttpResponse(file, content_type = 'audio.mp3')
-	response['Content-Disposition'] = f'attachment; filename = "{title}.mp3"'
-	os.remove(f'{dirs}/{title}.mp3')
-	return response
+	#messages.success(request, 'The download has been started, do not close this page')
+	if request.method == 'POST' and size < 900:	
+		stream.download(output_path = dirs, filename = f"{title}.mp3")
+		file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
+		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+		# o = dirs + title + '.mp4'
+		response = HttpResponse(file, content_type = 'audio.mp3')
+		response['Content-Disposition'] = f'attachment; filename = "{title}.mp3"'
+		os.remove(f'{dirs}/{title}.mp3')
+		return response
 	# return render(request, 'success.html')
+	else:
+		return render(request, 'error.html')
 
 def playlist(request):
+
 	url = request.GET.get('url')
 
 	playlist = Playlist(url)
@@ -132,13 +136,30 @@ def playlist(request):
 
 	homedir = os.path.expanduser("~")
 
-	dirs = homedir + f'/Downloads/{title}'
+	dirs = homedir + f'/Downloads'
 
-	messages.success(request, 'The download has been started, do not close this page')
+	size = 0
 
 	for i in videos:
-		name = i.title
 		stream = i.streams.filter(only_audio=True).first()
-		stream.download(output_path = dirs, filename = f"{name}.mp3")
+		size += stream.filesize // 1048576
 
-	shutil.make_archive(dirs, 'zip', dirs)
+	#messages.success(request, 'The download has been started, do not close this page')
+	if size < 900:
+		for i in videos:
+			name = i.title
+			stream = i.streams.filter(only_audio=True).first()
+			stream.download(output_path = f'{dirs}/{title}', filename = f"{name}.mp3")
+
+		path = shutil.make_archive(title,'zip', f'{dirs}/{title}')
+
+		file = FileWrapper(open(path, 'rb'))
+
+		response = HttpResponse(file, content_type='application/force-download')
+		response['Content-Disposition'] = f'attachment; filename = "{title}.zip"'
+		os.remove(path)
+		os.remove(f'{dirs}/{title}')
+		return response
+
+	else:
+		return render(request, 'error.html')
