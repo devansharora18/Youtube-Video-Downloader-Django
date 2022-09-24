@@ -112,16 +112,18 @@ def download_music(request):
 	dirs = homedir + '/Downloads/'
 	
 	#messages.success(request, 'The download has been started, do not close this page')
-		
-	stream.download(output_path = dirs, filename = f"{title}.mp3")
-	file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
-	# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
-	# o = dirs + title + '.mp4'
-	response = HttpResponse(file, content_type = 'audio.mp3')
-	response['Content-Disposition'] = f'attachment; filename = "{title}.mp3"'
-	os.remove(f'{dirs}/{title}.mp3')
-	return response
+	if request.method == 'POST' and size < 900:	
+		stream.download(output_path = dirs, filename = f"{title}.mp3")
+		file = FileWrapper(open(f'{dirs}/{title}.mp3', 'rb'))
+		# path =  '/home/runner/youtube-video-downloader/downloads/video' + '.mp4'
+		# o = dirs + title + '.mp4'
+		response = HttpResponse(file, content_type = 'audio.mp3')
+		response['Content-Disposition'] = f'attachment; filename = "{title}.mp3"'
+		os.remove(f'{dirs}/{title}.mp3')
+		return response
 	# return render(request, 'success.html')
+	else:
+		return render(request, 'error.html')
 
 def playlist(request):
 
