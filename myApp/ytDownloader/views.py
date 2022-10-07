@@ -5,6 +5,7 @@ import os
 from wsgiref.util import FileWrapper
 import shutil
 from django.contrib import messages
+from requests import request
 
 
 # Create your views here.
@@ -163,3 +164,6 @@ def playlist(request):
 
 	else:
 		return render(request, 'error.html')
+
+def contact(request):
+	return render(request, 'contact.html')
