@@ -1,7 +1,23 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<h2 style="padding-top: 50px;" class="ct">
+	Contact Me
+</h2>
 <center>
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfyKjSH1y7df29hLXWtsrAFe-pSpR0PdrtNixCAR1402VWLcA/viewform?embedded=true" width="640" height="1000" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+<form class="forms" action="mail.php" method="post" autocomplete="off">
+		
+	<label for="name" >Your Name</label>
+	<input type="text" name="name" class="input" placeholder="Your Name">
+
+	<label for="email">Email</label>
+	<input type="email" class="input" name="email" placeholder="Email">
+
+	<label for="message">Message</label>
+	<textarea name="message" placeholder="Message"></textarea>
+
+	<input class="input" type="submit" value="Submit">
+
+</form>
 </center>
 {% endblock %}
