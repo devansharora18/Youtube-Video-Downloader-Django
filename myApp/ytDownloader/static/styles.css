@@ -288,3 +288,7 @@ table {
 		width: 70%;
 	}
 }
+
+iframe {
+	padding-top: 100px;
+}
