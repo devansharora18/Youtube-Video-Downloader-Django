@@ -1,6 +1,6 @@
 # Youtube-Video-Downloader(Django) by Devansh Arora
 
-A website made to download youtube videos.
+A website made to download youtube videos, music or music-playlists.
 <br>
 It is fully responsive and supports client side download.
 <br>
